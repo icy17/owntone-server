@@ -4057,6 +4057,9 @@ mpd_accept_conn_cb(struct evconnlistener *listener,
   struct mpd_client_ctx *client_ctx = client_ctx_add();
 
   bev = bufferevent_filter_new(bev, mpd_input_filter, NULL, BEV_OPT_CLOSE_ON_FREE, client_ctx_remove, client_ctx);
+  if (bev == NULL)
+    return;
+
   bufferevent_setcb(bev, mpd_read_cb, NULL, mpd_event_cb, client_ctx);
   bufferevent_enable(bev, EV_READ | EV_WRITE);
 

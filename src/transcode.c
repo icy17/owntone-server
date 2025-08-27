@@ -1116,7 +1116,8 @@ make_wav_header(struct evbuffer **wav_header, uint32_t sample_rate, uint16_t byt
   add_le32(header + 40, bytes_total - WAV_HEADER_LEN);
 
   *wav_header = evbuffer_new();
-  evbuffer_add(*wav_header, header, sizeof(header));
+  if (*wav_header)
+    evbuffer_add(*wav_header, header, sizeof(header));
   return 0;
 }
 

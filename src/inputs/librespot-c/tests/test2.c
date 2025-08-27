@@ -252,8 +252,12 @@ main(int argc, char * argv[])
   audio_buf = evbuffer_new();
 
   read_ev = event_new(evbase, audio_fd, EV_READ | EV_PERSIST, audio_read_cb, NULL);
+    if (read_ev == NULL)
+    {
+      goto error;
+    }
+    
   event_add(read_ev, NULL);
-
   librespotc_write(audio_fd, progress_cb, NULL);
 
 //  stop_ev = evtimer_new(evbase, stop, &audio_fd);
